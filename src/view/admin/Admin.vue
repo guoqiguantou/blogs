@@ -18,7 +18,7 @@
             <router-link to="/admin/categoryAdmin">
               <MenuItem name="1-2">分类列表</MenuItem>
             </router-link>
-            <router-link to="/admin/AddAdmin">
+            <router-link to="/admin/addAdmin">
               <MenuItem name="1-3">文章新增</MenuItem>
             </router-link>
             <router-link to="/admin/categoryAdmin">

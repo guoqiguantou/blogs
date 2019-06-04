@@ -25,14 +25,29 @@ export default {
   },
   mounted() {
     this.getBloglist();
+    
   },
   methods: {
-    async getBloglist() {
-      let res = await getBloglist();
+    async getBloglist(data) {
+      let res = await getBloglist(data);
       if (res) {
         this.bloglist = res.data;
         console.log(res);
       }
+    }
+  },
+  watch:{
+    $route:{
+handler: function (val, oldVal) { 
+  console.log(val, oldVal)
+  if(this.$route.query.title){
+      console.log(val.query.title)
+      this.getBloglist({title:val.query.title});
+    }else{
+      this.getBloglist()
+    }
+ },
+      deep: true
     }
   }
 };

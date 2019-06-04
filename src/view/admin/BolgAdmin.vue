@@ -17,6 +17,7 @@
         <Col span="4">
           <FormItem>
             <Button type="primary" @click="Submit('formInline')">搜索</Button>
+            <Button @click="reset('formInline')" style="margin-left: 8px">重置</Button>
           </FormItem>
         </Col>
       </Row>
@@ -32,8 +33,8 @@ export default {
   data() {
     return {
       searchData: {
-        user: "",
-        password: ""
+        title: "",
+        cid: ""
       },
       columns1: [
         {
@@ -119,18 +120,23 @@ export default {
     this.getCategory();
   },
   methods: {
+    reset(name){
+      this.$refs[name].resetFields();
+      this.getBloglist();
+    },
     Submit(name) {
       this.$refs[name].validate(valid => {
         if (valid) {
           console.log(valid);
-          this.$Message.success("Success!");
+this.getBloglist({title:this.searchData.title,cid:this.searchData.cid});
+          //this.$Message.success("Success!");
         } else {
-          this.$Message.error("Fail!");
+          //this.$Message.error("Fail!");
         }
       });
     },
-    async getBloglist() {
-      let res = await getBloglist();
+    async getBloglist(data) {
+      let res = await getBloglist(data);
       console.log(res);
       if (res) {
         this.data = res.data;

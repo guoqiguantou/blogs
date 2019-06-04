@@ -41,8 +41,8 @@ export default [
         component: () => import('../view/admin/BolgAdmin.vue'),
       },
       {
-        path: 'categoryAdmin',
-        component: () => import('../view/admin/CategoryAdmin.vue'),
+        path: 'addAdmin',
+        component: () => import('../view/admin/AddAdmin.vue'),
       }
     ]
   },

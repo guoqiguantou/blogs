@@ -132,14 +132,20 @@ app.get('/category', function (req, res) {
     })
 })
 
-app.post('/bloglist', function (req, ress) {
-    var sql = 'SELECT a.id, a.time,a.title,a.desc,a.content, b.text AS cname  FROM blogs a INNER JOIN category b ON a.cid = b.id;'
-
+app.post('/bloglist', function (req, res) {
+    var sql = 'SELECT a.id, a.time,a.title,a.desc,a.content,a.cid, b.text AS cname  FROM blogs a INNER JOIN category b ON a.cid = b.id;'
+    if(req.body.title&&req.body.cid){
+        sql = `SELECT a.id, a.time,a.title,a.desc,a.content,a.cid, b.text AS cname  FROM blogs a INNER JOIN category b ON a.cid = b.id WHERE  title LIKE '%${req.body.title}%' OR cid=${req.body.cid}`
+    }else if(req.body.title){
+        sql =`SELECT a.id, a.time,a.title,a.desc,a.content,a.cid, b.text AS cname  FROM blogs a INNER JOIN category b ON a.cid = b.id WHERE  title LIKE '%${req.body.title}%'`
+    }else if(req.body.cid){
+        sql = `SELECT a.id, a.time,a.title,a.desc,a.content,a.cid, b.text AS cname  FROM blogs a INNER JOIN category b ON a.cid = b.id WHERE cid=${req.body.cid}`
+    }
     connection.query(sql, function (err, result) {
         if (err) {
             return;
         }
-        ress.end(
+        res.end(
             JSON.stringify({
                 msg: '查询成功',
                 code: 0,

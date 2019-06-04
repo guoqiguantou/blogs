@@ -7,7 +7,7 @@
       <div class="blog-box">
         <div class="header">搜索</div>
         <div class="blog-con">
-          <Input search placeholder="请输入关键字搜索"/>
+          <Input search placeholder="请输入关键字搜索" v-model="searchdata"  @on-search="searchfunc"/>
         </div>
       </div>
       <div class="blog-box">
@@ -74,7 +74,8 @@ import { getCategory } from "../api";
 export default {
   data() {
     return {
-      category: null
+      category: null,
+      searchdata:null
     };
   },
   mounted() {
@@ -87,6 +88,15 @@ export default {
         this.category = res.data;
         console.log(res);
       }
+    },
+    searchfunc(){
+      if(this.searchdata){
+        this.$router.push({ path: '/', query: { title: this.searchdata }})
+        this.searchdata=''
+      }else{
+        this.$router.push({ path: '/'})
+      }
+     
     }
   }
 };
