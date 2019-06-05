@@ -134,11 +134,11 @@ app.get('/category', function (req, res) {
 
 app.post('/bloglist', function (req, res) {
     var sql = 'SELECT a.id, a.time,a.title,a.desc,a.content,a.cid, b.text AS cname  FROM blogs a INNER JOIN category b ON a.cid = b.id;'
-    if(req.body.title&&req.body.cid){
+    if (req.body.title && req.body.cid) {
         sql = `SELECT a.id, a.time,a.title,a.desc,a.content,a.cid, b.text AS cname  FROM blogs a INNER JOIN category b ON a.cid = b.id WHERE  title LIKE '%${req.body.title}%' OR cid=${req.body.cid}`
-    }else if(req.body.title){
-        sql =`SELECT a.id, a.time,a.title,a.desc,a.content,a.cid, b.text AS cname  FROM blogs a INNER JOIN category b ON a.cid = b.id WHERE  title LIKE '%${req.body.title}%'`
-    }else if(req.body.cid){
+    } else if (req.body.title) {
+        sql = `SELECT a.id, a.time,a.title,a.desc,a.content,a.cid, b.text AS cname  FROM blogs a INNER JOIN category b ON a.cid = b.id WHERE  title LIKE '%${req.body.title}%'`
+    } else if (req.body.cid) {
         sql = `SELECT a.id, a.time,a.title,a.desc,a.content,a.cid, b.text AS cname  FROM blogs a INNER JOIN category b ON a.cid = b.id WHERE cid=${req.body.cid}`
     }
     connection.query(sql, function (err, result) {
@@ -217,6 +217,33 @@ app.post('/search', multipartMiddleware, function (req, res) {
 var server = app.listen(8888, function (request, response) {
     var host = server.address().address
     var port = server.address().port
+})
+
+app.post('/blogadd', multipartMiddleware, function (req, res) {
+    // var sql = ' DELETE FROM blogs WHERE id=' + req.body.id;
+    var addSql = 'INSERT INTO blogs(id,title,desc,content,cid) VALUES(0,"aaa","desc","11111111111",?)';
+    let addSqlParams = [];
+    let reqData = req.body;
+    // addSqlParams.push(reqData.title)
+    // addSqlParams.push(reqData.desc)
+    // addSqlParams.push(reqData.content)
+    addSqlParams.push(reqData.cid)
+    console.log(addSqlParams)
+    connection.query(addSql, addSqlParams, function (err, result) {
+        if (err) {
+            console.log('err', err);
+            return;
+        }
+        console.log(res)
+        res.end(
+            JSON.stringify({
+                msg: '添加成功',
+                code: 0,
+                flag: true,
+            })
+        );
+    })
+
 })
 
 

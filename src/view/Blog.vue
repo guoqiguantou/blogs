@@ -7,14 +7,18 @@
       <div class="blog-box">
         <div class="header">搜索</div>
         <div class="blog-con">
-          <Input search placeholder="请输入关键字搜索" v-model="searchdata"  @on-search="searchfunc"/>
+          <Input search placeholder="请输入关键字搜索" v-model="searchdata" @on-search="searchfunc"/>
         </div>
       </div>
       <div class="blog-box">
         <div class="header">文章分类</div>
         <div class="blog-con">
           <ul class="category">
-            <li v-for="(item,index) in category" :key="index">
+            <li
+              v-for="(item,index) in category"
+              :key="index"
+              @click="categoryfunc(item.id,item.num)"
+            >
               <p>
                 {{item.text}}
                 <span>[{{item.num}}]</span>
@@ -75,7 +79,7 @@ export default {
   data() {
     return {
       category: null,
-      searchdata:null
+      searchdata: null
     };
   },
   mounted() {
@@ -89,14 +93,18 @@ export default {
         console.log(res);
       }
     },
-    searchfunc(){
-      if(this.searchdata){
-        this.$router.push({ path: '/', query: { title: this.searchdata }})
-        this.searchdata=''
-      }else{
-        this.$router.push({ path: '/'})
+    categoryfunc(category, num) {
+      if (num) {
+        this.$router.push({ path: "/", query: { category: category } });
       }
-     
+    },
+    searchfunc() {
+      if (this.searchdata) {
+        this.$router.push({ path: "/", query: { title: this.searchdata } });
+        this.searchdata = "";
+      } else {
+        this.$router.push({ path: "/" });
+      }
     }
   }
 };

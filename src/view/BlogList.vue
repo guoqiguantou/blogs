@@ -25,7 +25,6 @@ export default {
   },
   mounted() {
     this.getBloglist();
-    
   },
   methods: {
     async getBloglist(data) {
@@ -36,17 +35,20 @@ export default {
       }
     }
   },
-  watch:{
-    $route:{
-handler: function (val, oldVal) { 
-  console.log(val, oldVal)
-  if(this.$route.query.title){
-      console.log(val.query.title)
-      this.getBloglist({title:val.query.title});
-    }else{
-      this.getBloglist()
-    }
- },
+  watch: {
+    $route: {
+      handler: function(val, oldVal) {
+        console.log(val, oldVal);
+        if (this.$route.query.title) {
+          console.log(val.query.title);
+          this.getBloglist({ title: val.query.title });
+        } else {
+          this.getBloglist();
+        }
+        if (this.$route.query.category) {
+          this.getBloglist({ cid: val.query.category });
+        }
+      },
       deep: true
     }
   }

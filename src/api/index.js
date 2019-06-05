@@ -15,4 +15,7 @@ export const getBlogContent = (data) => {
 export const getBlogdel = (data) => {
     return http('post', '/blogdel', data)
 }
+export const blogadd = (data) => {
+    return http('post', '/blogadd', data)
+}
 
