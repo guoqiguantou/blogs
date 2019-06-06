@@ -43,7 +43,18 @@ export default {
         },
         {
           title: "blumb",
-          key: "blumb"
+          key: "blumb",
+          render: (h, params) => {
+            return h(
+              "img",
+              {
+                attrs: {
+                  src: params.row.blumb
+                }
+              },
+              "qqqqqqq"
+            );
+          }
         },
         {
           title: "title",
@@ -120,7 +131,7 @@ export default {
     this.getCategory();
   },
   methods: {
-    reset(name){
+    reset(name) {
       this.$refs[name].resetFields();
       this.getBloglist();
     },
@@ -128,7 +139,10 @@ export default {
       this.$refs[name].validate(valid => {
         if (valid) {
           console.log(valid);
-this.getBloglist({title:this.searchData.title,cid:this.searchData.cid});
+          this.getBloglist({
+            title: this.searchData.title,
+            cid: this.searchData.cid
+          });
           //this.$Message.success("Success!");
         } else {
           //this.$Message.error("Fail!");

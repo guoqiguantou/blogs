@@ -18,7 +18,9 @@
             <Upload
               multiple
               type="drag"
-              action="//jsonplaceholder.typicode.com/posts/">
+              action="http://127.0.0.1:8888/file_upload"
+              :on-success="successUpload"
+              >
               <div style="padding: 20px 0">
                   <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
                   <p>Click or drag files here to upload</p>
@@ -30,7 +32,7 @@
           </FormItem>
           <Divider><p style="font-size:14px">文章正文</p></Divider>
           <div>
-            <mavon-editor v-model="addData.content" style="min-height:500px"/>
+            <mavon-editor v-model="addData.content" style="min-height:500px" />
           </div>
         <FormItem style="marginTop:30px">
             <Button type="primary" @click="submit">新增</Button>
@@ -52,6 +54,7 @@ export default {
         desc:null,
         content:'',
         cid: 1,
+        blumb:null
       },
       category: null
     };
@@ -61,6 +64,10 @@ export default {
     this.getCategory();
   },
   methods: {
+    successUpload( response, file, fileList){
+      this.addData.blumb=response.filename;
+      console.log( response, file, fileList)
+    },
     async getBloglist(data) {
       let res = await getBloglist(data);
       console.log(res);

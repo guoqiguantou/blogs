@@ -5,7 +5,7 @@
       v-for="(item,index) in bloglist"
       v-bind:key="index"
       :time="item.time"
-      :desc="item.desc"
+      :desc="item.desce"
       :cname="item.cname"
       :id="item.id"
     />
